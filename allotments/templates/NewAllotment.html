@@ -1,0 +1,352 @@
+{% load static %}
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\components.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> -->
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css\admincss1.css' %}">
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\vendors\css\vendors.min.css'%}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\bootstrap-extended.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\colors.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\components.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\themes\dark-layout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\themes\bordered-layout.css'%}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'app-assets\css\core\menu\menu-types\horizontal-menu.css' %} ">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\plugins\forms\form-validation.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets\css\pages\page-auth.css' %}">
+    <!-- END: Page CSS-->
+    <script src="{% static 'app-assets\js\core\adminjs.js' %}"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css\admincss1.css' %}"> -->
+    <style>
+        .select2-results__option {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topnav" id="myTopnav" class="show">
+
+        <a href="{% url 'allotments:allotments' %}" class="active">Allotments</a>
+        <a href="{% url 'allotments:new-allotment' %}">New Allotment</a>
+
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+    </div>
+    <br /><br />
+    <form action="{% url 'allotments:new-allotment'%}" method="post">
+        {% csrf_token %}
+        <div class="card m-auto" style="width: 80%;">
+            <a href="{% url 'allotments:allotments' %}">See All Allotments</a>
+            <div class="card-body row">
+                <div class="col-md-6">
+                    <label>Batch</label>
+                    <div class="select-style">
+
+                        <select id="Program" name="program" class="select-style">
+                            <option value="Program" {% if batch %} {% else %} selected {% endif %}disabled>-- Program --
+                            </option>
+                            {% for program in programs %}
+                            <option value="{{program.id}}" {% ifequal b.id batch %} selected {% endifequal %}>{{program.program_name}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
+                </div>
+                <div class="col-md-6">
+                    <label>Batch</label>
+                    <div class="select-style">
+                
+                        <select id="Batch" name="batch" class="select-style">
+                            <option value="Batch" {% if batch %} {% else %} selected {% endif %}disabled>-- Batch --
+                            </option>
+                            {% for b in batches %}
+                            <option value="{{b.id}}" {% ifequal b.id batch %} selected {% endifequal %}>{{b.batch_name}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
+                </div>
+                <div class="col-md-6">
+                    <label>Branch</label>
+                    <div class="select-style">
+
+                        <select id="Branch" name="branch" class="select-style">
+                            <option value="Branch" {% if branch %} {% else %} selected {% endif %} disabled>-- Branch --
+                            </option>
+                            {% for b in branches %}
+                            <option value="{{b.branch_code}}" {% ifequal b.branch_code branch %} selected {% endifequal %}>
+                                {{b.branch_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Year</label>
+                    <div class="select-style">
+
+                        <select id="Year" name="year">
+                            <option value="Semester" {% if year %} {% else %} selected {% endif %} disabled>-- year --
+                            </option>
+                            <option value="1" {% ifequal year 1 %} selected {% endifequal %}>1st Year</option>
+                            <option value="2" {% ifequal year 2 %} selected {% endifequal %}>2nd Year</option>
+                            <option value="3" {% ifequal year 3 %} selected {% endifequal %}>3rd Year</option>
+                            <option value="4" {% ifequal year 4 %} selected {% endifequal %}>4th Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <br />
+                    <label>Semester</label>
+                    <div class="select-style">
+
+                        <select id="Semester" name="semester">
+                            <option value="Semester" {% if semester %} {% else %} selected {% endif %} disabled>--
+                                Semester --</option>
+                            <option value="1" {% ifequal semester 1 %} selected {% endifequal %}>1 Sem</option>
+                            <option value="2" {% ifequal semester 2 %} selected {% endifequal %}>2 Sem</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <br /><label>Subject</label>
+                    <div class="select-style">
+                        <select id="Subjectlist" name="subject">
+                            <option value="" selected disabled>-- Subject --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <br /><label>Faculty Branch</label>
+                    <div class="select-style">
+                        <select id="FacultyBranch" name="faculty_branch">
+                            <option value="Branch" {% if faculty_branch %} {% else %} selected {% endif %} disabled>--
+                                Branch --</option>
+                            {% for b in branches %}
+                            <option value="{{b.branch_code}}" {% ifequal b.branch_code faculty_branch %} selected {% endifequal %}>{{b.branch_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+                <br><br>
+                <div class="col-md-6">
+                    <br>
+                    <label style="padding-left:1vh;">Faculty</label>
+                    <div class="select-style">
+                        <select id="Faculty" name="faculty">
+                            <option value="" selected disabled>-- Faculty --</option>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2 text-center">
+                <button value="Submit" type="submit">Submit</button>
+            </div>
+        </div>
+
+        </div>
+    </form>
+    </div>
+    <div class="toast-container position-fixed p-2" style="top: 2.5rem; right: 2rem;">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="toast toast-stacked fade show" role="alert" aria-live="assertive" aria-atomic="true"
+            data-delay="5000" style="border: 2px solid black;">
+            <div class="toast-header">
+                <strong class="mr-auto">{{message}}</strong>
+                <button type="button" class="ml-1 close" data-dismiss="toast" aria-label="Close"
+                    onclick="toast_close(this)">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <script>
+        var programSelect = document.getElementById("Program");
+        var branchSelect = document.getElementById("Branch");
+        var yearSelect = document.getElementById("Year");
+        var semesterSelect = document.getElementById("Semester");
+        var facultyBranchSelect = document.getElementById("FacultyBranch");
+        var filters = { 'program':'{{program}}' ,'branch': '{{branch}}', 'year': '{{year}}', 'semester': '{{semester}}' }
+        var facultybranch = '{{faculty_branch}}';
+        var subjects = [
+
+            {% for subject in subjects %}
+        {
+            "id": "{{subject.id}}",
+                "name": "{{subject.subject_name}}",
+                    "branch": "{{subject.branch}}",
+                        "year": "{{subject.year}}",
+                            "semester": "{{subject.semester}}",
+                            "program": "{{subject.program}}",
+        },
+        {% endfor %}
+        ];
+        var faculty = [
+            {% for fac in faculties %}
+        {
+            "id": "{{fac.id}}",
+                "first_name": "{{fac.first_name}}",
+                    "last_name": "{{fac.last_name}}",
+                        "branch": "{{fac.faculty_branch.branch_code}}",
+            },
+        {% endfor %}
+        ];
+        var filteredData = subjects;
+        function filterSubjects(subject) {
+            return subject['program']==programSelect.options[programSelect.selectedIndex].text && subject['branch'] == branchSelect.options[branchSelect.selectedIndex].text && subject['year'] == yearSelect.options[yearSelect.selectedIndex].value && subject['semester'] == semesterSelect.options[semesterSelect.selectedIndex].value;
+        }
+        function getSubjects(subs) {
+            s = []
+            for (var i = 0; i < subs.length; i++) {
+                s[i] = { 'id': subs[i]['id'], 'text': subs[i]['name'] }
+            }
+            // console.log(s)
+            return s
+        }
+        function getFaculty(faculty) {
+            // console.log(faculty)
+            f = []
+            for (var i = 0; i < faculty.length; i++) {
+                if (faculty[i]['first_name'] != null)
+                    f[i] = { 'id': faculty[i]['id'], 'text': faculty[i]['first_name'] + ' ' + faculty[i]['last_name'] }
+            }
+            // console.log(s)
+            return f
+        }
+
+        $(document).ready(function () {
+
+
+            $("#Subjectlist").select2({
+                data: getSubjects(filter(subjects))
+            });
+        });
+        function filter(data) {
+            console.log(filters)
+            filteredData = data
+            if (filters['program'] != '') {
+                filteredData = filteredData.filter(function (subject) {
+                    return subject['program'] == filters['program'];
+                });
+            }
+            if (filters['branch'] != '') {
+                filteredData = filteredData.filter(function (subject) {
+                    return subject['branch'] == filters['branch'];
+                });
+            }
+            if (filters['year'] != '') {
+                filteredData = filteredData.filter(function (subject) {
+                    return subject['year'] == filters['year'];
+                });
+            }
+            if (filters['semester'] != '') {
+                filteredData = filteredData.filter(function (subject) {
+                    return subject['semester'] == filters['semester'];
+                });
+            }
+            return filteredData
+        }
+        function facultyfilter(data) {
+            filteredData = data
+            // console.log(filteredData)
+            if (facultybranch != '') {
+                // console.log(facultybranch)
+                filteredData = filteredData.filter(function (fac) {
+                    return fac['branch'] == facultybranch;
+                });
+            }
+            return filteredData
+        }
+        $(document).ready(function () {
+
+
+            $("#Faculty").select2({
+                data: getFaculty(facultyfilter(faculty))
+            });
+        });
+
+        var $select = $("#Subjectlist");
+        var $facultyselect = $("#Faculty");
+        // $('#FacultyBranch').bind("change", function (e) {
+
+        //     if (facultyBranchSelect.options[facultyBranchSelect.selectedIndex].text == 'Branch')
+        //         facultybranch = ''
+        //     else
+        //         facultybranch = facultyBranchSelect.options[facultyBranchSelect.selectedIndex].value
+        //     setSelect2Options(getFaculty(facultyfilter(subjects)));
+        // });
+        $('#Program').bind("change", function (e) {
+
+            if (programSelect.value == 'Program')
+                filters['program'] = ''
+            else
+                filters['program'] = programSelect.options[programSelect.selectedIndex].text
+            setSelect2Options(getSubjects(filter(subjects)));
+        });
+        $('#Branch').bind("change", function (e) {
+
+            if (branchSelect.options[branchSelect.selectedIndex].text == 'Branch')
+                filters['branch'] = ''
+            else
+                filters['branch'] = branchSelect.options[branchSelect.selectedIndex].text
+            setSelect2Options(getSubjects(filter(subjects)));
+        });
+        $('#Year').bind("change", function (e) {
+
+            if (yearSelect.value == 'Year')
+                filters['year'] = ''
+            else
+                filters['year'] = yearSelect.value
+            setSelect2Options(getSubjects(filter(subjects)));
+        });
+        $('#Semester').bind("change", function (e) {
+
+            if (semesterSelect.value == 'Semester')
+                filters['semester'] = ''
+            else
+                filters['semester'] = semesterSelect.value
+            setSelect2Options(getSubjects(filter(subjects)));
+        });
+        $('#FacultyBranch').bind("change", function (e) {
+
+            if (facultyBranchSelect.value == 'Branch')
+                facultybranch = ''
+            else
+                facultybranch = facultyBranchSelect.value
+            setSelect2facultyOptions(getFaculty(facultyfilter(faculty)));
+        });
+        function setSelect2Options(data) {
+            $select.select2('destroy').empty().select2({ data: data });
+        }
+        function setSelect2facultyOptions(data) {
+            // console.log(data)
+            $facultyselect.select2('destroy').empty().select2({ data: data });
+        }
+        function toast_close(ele) {
+            ele.parentElement.parentElement.style.display = 'none'
+        }
+
+    </script>
+    <script src="{% static 'app-assets/js/scripts/components/components-bs-toast.js' %}"></script>
+</body>
+
+
+</html>

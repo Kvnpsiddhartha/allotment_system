@@ -1,0 +1,105 @@
+body{
+  background-color:blanchedalmond;
+  background-attachment: relative;
+}
+table{
+  height: 20%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+table,th{
+  border: 1.6px solid;
+  text-align: center;
+  padding:10px;
+}
+input{
+  height: 100%;
+  width: 100%;
+}
+
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  
+}
+
+.topnav a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+
+.topnav .icon {
+  display: none;
+}
+
+
+
+.topnav a:hover,
+.dropdown:hover .dropbtn {
+  background-color: green;
+  color: white;
+}
+button{
+  margin-left: 1400px;
+  margin-top: 9px;
+  border-color:#333 ;
+}
+
+
+@media screen and (max-width: 600px) {
+
+  .topnav a:not(:first-child),
+  .dropdown .dropbtn {
+      display: none;
+  }
+
+  .topnav a.icon {
+      float: left;
+      display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {
+      position: relative;
+  }
+
+  .topnav.responsive .icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+  }
+
+  .topnav.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
+  
+  }
+  
+}
+.del{
+  color:blueviolet;
+  border-color: blueviolet;
+  background-color: white;
+  font-size: 15px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  float: right;
+}
+
+img{
+  height: 30px;
+  width: 30px;
+  
+}
+
+.bg-prim{
+  background-color: #ffbd5b;
+}

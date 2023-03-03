@@ -1,0 +1,18 @@
+@media screen {
+  pi.bodyText {font-family:verdana, arial, sans-serif;}
+}
+
+@media print {
+ pi.bodyText {font-family:georgia, times, serif;}
+.print-hide{
+  visibility: hidden;
+  display: none;
+ }
+.topnav{
+  visibility: hidden;
+  display: none;
+}
+}
+@media screen, print {
+ pi.bodyText {font-size:40pt;}
+}

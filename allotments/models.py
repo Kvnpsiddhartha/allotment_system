@@ -10,18 +10,19 @@ class Branch(models.Model):
     class Meta:
         verbose_name_plural='Branches'
 
-class Batch(models.Model):
-    batch_name=models.CharField(max_length=50)
-    def __str__(self):
-        return self.batch_name
-    class Meta:
-        verbose_name_plural='Batches'
 
 class Program(models.Model):
     program_name=models.CharField(max_length=50)
     def __str__(self):
         return self.program_name
 
+class Batch(models.Model):
+    program=models.ForeignKey(Program,on_delete=models.DO_NOTHING,related_name='batches',null=True,blank=True)
+    batch_name=models.CharField(max_length=50)
+    def __str__(self):
+        return self.batch_name
+    class Meta:
+        verbose_name_plural='Batches'
 class Student(models.Model):
     name=models.CharField(max_length=50)
     rollno=models.CharField(max_length=50,primary_key=True)
@@ -67,3 +68,10 @@ class Allotment(models.Model):
         return self.faculty.first_name+" "+self.faculty.last_name+" ( "+self.subject.subject_name+" )"
     class Meta:
         unique_together = ('subject', 'faculty','batch')
+
+class AcademicYear(models.Model):
+    year=models.CharField(max_length=50)
+    batch=models.ForeignKey(Batch,on_delete=models.DO_NOTHING,related_name='academic_years')
+    
+    def __str__(self):
+        return self.year

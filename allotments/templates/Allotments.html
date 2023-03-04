@@ -58,16 +58,27 @@
 
     <br><br>
     <h3 class="text-center" style="font-family:Georgia, 'Times New Roman', Times, serif;font-weight:bold;color:black;">
-        {{ batch.batch_name}} {{branch.branch_name}} {{year}}-{{semester}}<button type="button" class="btn print-hide"
+        {% ifequal type "faculty" %}
+       {{faculty.first_name}} {{faculty.last_name}} - 
+       {{branch.branch_name}} 
+       {% endifequal %} 
+       <button type="button" class="btn print-hide"
             onclick="window.print()"><img src="{%static 'assets\printer.png'%}" /></button></h3>
     <center>
         <table border="1" id="edit"
             style="font-weight:bold;font-family:Georgia, 'Times New Roman', Times, serif;color:black;background-color:blanchedalmond">
             <tr style="height:20px;">
                 <th>NO.</th>
+                <th>Program</th>
+                <th>Batch</th>
+                <th>Branch</th>
+                <th>Year</th>
+                <th>Semester</th>
                 <th>Subject Code</th>
                 <th>Subject</th>
-                <th>Teacher Name</th>
+                {% ifequal type "class" %}
+                <th>Faculty</th>
+                {% endifequal %}
                 <!-- <th>Attendance status</th>
                 <th>Marks status</th> -->
             </tr>
@@ -75,9 +86,16 @@
             {% for allotment in allotments %}
             <tr>
                 <th>{{forloop.counter}} . </th>
+                <th>{{allotment.subject.program.program_name}}</th>
+                <th>{{allotment.batch.batch_name}}</th>
+                <th>{{allotment.branch.branch_name}}</th>
+                <th>{{allotment.subject.year}}</th>
+                <th>{{allotment.subject.semester}}</th>
                 <th>{{allotment.subject.subject_code}}</th>
                 <th>{{allotment.subject.subject_name}}</th>
+                {% ifequal type "class" %}
                 <th>{{allotment.faculty.first_name}} {{allotment.faculty.last_name}}</th>
+                {% endifequal %}
             </tr>
             {% endfor %}
         </table>

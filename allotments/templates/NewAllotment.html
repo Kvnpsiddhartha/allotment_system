@@ -52,14 +52,14 @@
             <a href="{% url 'allotments:allotments' %}">See All Allotments</a>
             <div class="card-body row">
                 <div class="col-md-6">
-                    <label>Batch</label>
+                    <label>Program</label>
                     <div class="select-style">
 
                         <select id="Program" name="program" class="select-style">
                             <option value="Program" {% if batch %} {% else %} selected {% endif %}disabled>-- Program --
                             </option>
                             {% for program in programs %}
-                            <option value="{{program.id}}" {% ifequal b.id batch %} selected {% endifequal %}>{{program.program_name}}
+                            <option value="{{program.id}}" {% ifequal program.id program %} selected {% endifequal %}>{{program.program_name}}
                             </option>
                             {% endfor %}
                         </select>
@@ -100,10 +100,10 @@
                         <select id="Year" name="year">
                             <option value="Semester" {% if year %} {% else %} selected {% endif %} disabled>-- year --
                             </option>
-                            <option value="1" {% ifequal year 1 %} selected {% endifequal %}>1st Year</option>
-                            <option value="2" {% ifequal year 2 %} selected {% endifequal %}>2nd Year</option>
-                            <option value="3" {% ifequal year 3 %} selected {% endifequal %}>3rd Year</option>
-                            <option value="4" {% ifequal year 4 %} selected {% endifequal %}>4th Year</option>
+                            <option value="1" {% ifequal year "1" %} selected {% endifequal %}>1st Year</option>
+                            <option value="2" {% ifequal year "2" %} selected {% endifequal %}>2nd Year</option>
+                            <option value="3" {% ifequal year "3" %} selected {% endifequal %}>3rd Year</option>
+                            <option value="4" {% ifequal year "4" %} selected {% endifequal %}>4th Year</option>
                         </select>
                     </div>
                 </div>
@@ -115,8 +115,8 @@
                         <select id="Semester" name="semester">
                             <option value="Semester" {% if semester %} {% else %} selected {% endif %} disabled>--
                                 Semester --</option>
-                            <option value="1" {% ifequal semester 1 %} selected {% endifequal %}>1 Sem</option>
-                            <option value="2" {% ifequal semester 2 %} selected {% endifequal %}>2 Sem</option>
+                            <option value="1" {% ifequal semester "1" %} selected {% endifequal %}>1 Sem</option>
+                            <option value="2" {% ifequal semester "2" %} selected {% endifequal %}>2 Sem</option>
                         </select>
                     </div>
                 </div>
@@ -179,6 +179,7 @@
         {% endif %}
     </div>
     <script>
+        console.log("HJK")
         var programSelect = document.getElementById("Program");
         var branchSelect = document.getElementById("Branch");
         var yearSelect = document.getElementById("Year");
@@ -192,10 +193,10 @@
         {
             "id": "{{subject.id}}",
                 "name": "{{subject.subject_name}}",
-                    "branch": "{{subject.branch}}",
+                    "branch": "{{subject.branch.branch_code}}",
                         "year": "{{subject.year}}",
                             "semester": "{{subject.semester}}",
-                            "program": "{{subject.program}}",
+                            "program": "{{subject.program.id}}",
         },
         {% endfor %}
         ];
@@ -218,7 +219,7 @@
             for (var i = 0; i < subs.length; i++) {
                 s[i] = { 'id': subs[i]['id'], 'text': subs[i]['name'] }
             }
-            // console.log(s)
+            console.log(s)
             return s
         }
         function getFaculty(faculty) {
@@ -231,7 +232,7 @@
             // console.log(s)
             return f
         }
-
+        console.log("hello")
         $(document).ready(function () {
 
 
@@ -247,21 +248,25 @@
                     return subject['program'] == filters['program'];
                 });
             }
+            console.log(filteredData)
             if (filters['branch'] != '') {
                 filteredData = filteredData.filter(function (subject) {
                     return subject['branch'] == filters['branch'];
                 });
             }
+            console.log(filteredData)
             if (filters['year'] != '') {
                 filteredData = filteredData.filter(function (subject) {
                     return subject['year'] == filters['year'];
                 });
             }
+            console.log(filteredData)
             if (filters['semester'] != '') {
                 filteredData = filteredData.filter(function (subject) {
                     return subject['semester'] == filters['semester'];
                 });
             }
+            console.log(filteredData)
             return filteredData
         }
         function facultyfilter(data) {
@@ -298,7 +303,7 @@
             if (programSelect.value == 'Program')
                 filters['program'] = ''
             else
-                filters['program'] = programSelect.options[programSelect.selectedIndex].text
+                filters['program'] = programSelect.value
             setSelect2Options(getSubjects(filter(subjects)));
         });
         $('#Branch').bind("change", function (e) {
@@ -306,7 +311,7 @@
             if (branchSelect.options[branchSelect.selectedIndex].text == 'Branch')
                 filters['branch'] = ''
             else
-                filters['branch'] = branchSelect.options[branchSelect.selectedIndex].text
+                filters['branch'] = branchSelect.value
             setSelect2Options(getSubjects(filter(subjects)));
         });
         $('#Year').bind("change", function (e) {

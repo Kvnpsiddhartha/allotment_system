@@ -51,32 +51,31 @@
             <!-- <a href="">See All Allotments</a> -->
             <div class="card-body row">
                 <div class="col-md-6">
-                    <label>Program</label>
+                    <label>Academic Year</label>
                     <div class="select-style">
                 
-                        <select id="Program" name="program" class="select-style">
-                            <option value="Program" {% if batch %} {% else %} selected {% endif %}disabled>-- Program --
+                        <select id="Academic-Year" name="academic_year" class="select-style">
+                            <option value="Academic-Year" disabled>-- Academic Year --
                             </option>
-                            {% for program in programs %}
-                            <option value="{{program.id}}" {% ifequal b.id batch %} selected {% endifequal %}>{{program.program_name}}
+                            {% for year in academic_years %}
+                            <option value="{{year}}">{{year}}
                             </option>
                             {% endfor %}
                         </select>
                     </div><br>
                 </div>
                 <div class="col-md-6">
-                    <label>Batch</label>
+                    <br />
+                    <label>Semester</label>
                     <div class="select-style">
-
-                        <select id="Batch" name="batch" class="select-style">
-                            <option value="Batch" {% if batch %} {% else %} selected {% endif %}disabled>-- Batch --
-                            </option>
-                            {% for b in batches %}
-                            <option value="{{b.id}}" {% ifequal b.id batch %} selected {% endifequal %}>{{b.batch_name}}
-                            </option>
-                            {% endfor %}
+                
+                        <select id="Semester" name="semester">
+                            <option value="Semester" {% if semester %} {% else %} selected {% endif %} disabled>--
+                                Semester --</option>
+                            <option value="1" {% ifequal semester "1" %} selected {% endifequal %}>1 Sem</option>
+                            <option value="2" {% ifequal semester "2" %} selected {% endifequal %}>2 Sem</option>
                         </select>
-                    </div><br>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label>Branch</label>
@@ -93,38 +92,102 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <label style="padding-left:1vh;">Faculty</label>
+                    <div class="select-style">
+                        <select id="Faculty" name="faculty">
+                            <option value="" selected disabled>-- Faculty --</option>
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-12 mt-2 text-center">
+                <button name="submit" value="faculty" type="submit">Submit</button>
+            </div>
+        </div>
+        <div class="card m-auto" style="width: 80%;margin-top: 50px!important;">
+            <!-- <a href="">See All Allotments</a> -->
+            <div class="card-body row">
+                <div class="col-md-6">
+                    <label>Program</label>
+                    <div class="select-style">
+                
+                        <select id="Program" name="program" class="select-style">
+                            <option value="Program" {% if batch %} {% else %} selected {% endif %}disabled>-- Program --
+                            </option>
+                            {% for program in programs %}
+                            <option value="{{program.id}}" {% ifequal program.id program %} selected {% endifequal %}>
+                                {{program.program_name}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
+                </div>
+                <div class="col-md-6">
+                    <label>Academic Year</label>
+                    <div class="select-style">
+        
+                        <select id="Academic-Year" name="academic-year" class="select-style">
+                            <option value="Academic-Year" disabled>-- Academic Year --
+                            </option>
+                            {% for year in academic_years %}
+                            <option value="{{year}}">{{year}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
+                </div>
+                <div class="col-md-6">
                     <label>Year</label>
                     <div class="select-style">
-
+                
                         <select id="Year" name="year">
                             <option value="Semester" {% if year %} {% else %} selected {% endif %} disabled>-- year --
                             </option>
-                            <option value="1" {% ifequal year 1 %} selected {% endifequal %}>1st Year</option>
-                            <option value="2" {% ifequal year 2 %} selected {% endifequal %}>2nd Year</option>
-                            <option value="3" {% ifequal year 3 %} selected {% endifequal %}>3rd Year</option>
-                            <option value="4" {% ifequal year 4 %} selected {% endifequal %}>4th Year</option>
+                            <option value="1" {% ifequal year "1" %} selected {% endifequal %}>1st Year</option>
+                            <option value="2" {% ifequal year "2" %} selected {% endifequal %}>2nd Year</option>
+                            <option value="3" {% ifequal year "3" %} selected {% endifequal %}>3rd Year</option>
+                            <option value="4" {% ifequal year "4" %} selected {% endifequal %}>4th Year</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <br>
+                    <br />
                     <label>Semester</label>
                     <div class="select-style">
-
+        
                         <select id="Semester" name="semester">
                             <option value="Semester" {% if semester %} {% else %} selected {% endif %} disabled>--
                                 Semester --</option>
-                            <option value="1" {% ifequal semester 1 %} selected {% endifequal %}>1 Sem</option>
-                            <option value="2" {% ifequal semester 2 %} selected {% endifequal %}>2 Sem</option>
+                            <option value="1" {% ifequal semester "1" %} selected {% endifequal %}>1 Sem</option>
+                            <option value="2" {% ifequal semester "2" %} selected {% endifequal %}>2 Sem</option>
                         </select>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <label>Branch</label>
+                    <div class="select-style">
+        
+                        <select id="Branch" name="branch" class="select-style">
+                            <option value="Branch" {% if branch %} {% else %} selected {% endif %} disabled>-- Branch --
+                            </option>
+                            {% for b in branches %}
+                            <option value="{{b.branch_code}}" {% ifequal b.branch_code branch %} selected {% endifequal %}>
+                                {{b.branch_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                
+        
+        
             </div>
             <div class="col-12 mt-2 text-center">
-                <button value="Submit" type="submit">Submit</button>
+                <button name="submit" value="class" type="submit">Submit</button>
             </div>
         </div>
-
         </div>
     </form>
     </div>
@@ -145,7 +208,60 @@
         {% endif %}
     </div>
     <script>
+        var facultyBranchSelect = document.getElementById("Branch");
+        var filters = { 'program': '{{program}}', 'branch': '{{branch}}', 'year': '{{year}}', 'semester': '{{semester}}' }
+        var facultybranch = '{{faculty_branch}}';
+        var faculty = [
+            {% for fac in faculties %}
+        {
+            "id": "{{fac.id}}",
+                "first_name": "{{fac.first_name}}",
+                    "last_name": "{{fac.last_name}}",
+                        "branch": "{{fac.faculty_branch.branch_code}}",
+            },
+        {% endfor %}
+        ];
+        function getFaculty(faculty) {
+            // console.log(faculty)
+            f = []
+            for (var i = 0; i < faculty.length; i++) {
+                if (faculty[i]['first_name'] != null)
+                    f[i] = { 'id': faculty[i]['id'], 'text': faculty[i]['first_name'] + ' ' + faculty[i]['last_name'] }
+            }
+            // console.log(s)
+            return f
+        }
+        function facultyfilter(data) {
+            filteredData = data
+            // console.log(filteredData)
+            if (facultybranch != '') {
+                // console.log(facultybranch)
+                filteredData = filteredData.filter(function (fac) {
+                    return fac['branch'] == facultybranch;
+                });
+            }
+            return filteredData
+        }
+        $(document).ready(function () {
 
+
+            $("#Faculty").select2({
+                data: getFaculty(facultyfilter(faculty))
+            });
+        });
+        var $facultyselect = $("#Faculty");
+        $('#Branch').bind("change", function (e) {
+
+            if (facultyBranchSelect.value == 'Branch')
+                facultybranch = ''
+            else
+                facultybranch = facultyBranchSelect.value
+            setSelect2facultyOptions(getFaculty(facultyfilter(faculty)));
+        });
+        function setSelect2facultyOptions(data) {
+            // console.log(data)
+            $facultyselect.select2('destroy').empty().select2({ data: data });
+        }
         function toast_close(ele) {
             ele.parentElement.parentElement.style.display = 'none'
         }
